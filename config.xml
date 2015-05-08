@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<widget xmlns   = "http://www.w3.org/ns/widgets"
+	xmlns:gap   = "http://phonegap.com/ns/1.0"
+	id          = "com.phonegap.example"
+	versionCode = "10" 
+	version     = "1.0.2" >
+	
+	<!-- versionCode is optional and Android only -->
+	
+	<name>Cardio Fitness Noord</name>
+	<description>Sportschool app</description>
+	
+	<author href="http://www.cardiofitness-noord.nl" email="app@cardiofitness-noord.nl">Martin Siepkes</author>
+	<!-- 
+	<gap:splash src="images/splash.png" />
+	<preference name="SplashScreenDelay" value="1500" />
+	<preference name="splash-screen-duration" value="1500"/>
+	-->
+	<preference name="fullscreen" value="false" />
+	<preference name="target-device" value="handset" />
+	
+	<icon src="images/logosmall.png" />
+	<!-- 
+	<gap:plugin name="org.apache.cordova.vibration" version="0.3.11" /> 
+	<gap:plugin name="com.footprint.cordova.plugin.local-notification" version="0.8.0" /> 
+	-->
+	<gap:plugin name="nl.genkgo.inappbrowser" version="0.5.0" />
+	<access origin="http://phonegap.com" subdomains="true" />
+</widget>

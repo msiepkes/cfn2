@@ -1,0 +1,102 @@
+{
+  "name": "cfn",
+  "css_prefix_text": "icon-",
+  "css_use_suffix": false,
+  "hinting": true,
+  "units_per_em": 1000,
+  "ascent": 850,
+  "glyphs": [
+    {
+      "uid": "df6e7c7f67b7cbf9432a8babef8e7e97",
+      "css": "schema",
+      "code": 59400,
+      "src": "custom_icons",
+      "selected": true,
+      "svg": {
+        "path": "M385.7 578H270.6V463H385.7V578ZM559.5 463H444.4V578H559.5V463ZM733.3 463H618.3V578H733.3V463ZM385.7 631H270.6V746H385.7V631ZM559.5 631H444.4V746H559.5V631ZM733.3 631H618.3V746H733.3V631ZM776.2 230.7C776.2 250.3 760.3 266.2 740.7 266.2S705.2 250.3 705.2 230.7V141.4C705.2 121.8 721.1 105.9 740.7 105.9S776.2 121.8 776.2 141.4V230.7ZM296.7 141.3C296.7 121.7 280.8 105.8 261.2 105.8 241.6 105.8 225.7 121.7 225.7 141.3V230.6C225.7 250.2 241.6 266.1 261.2 266.1 280.8 266.1 296.7 250.2 296.7 230.6V141.3ZM819 193.1V229.4C819 272.7 783.9 307.8 740.7 307.8 697.4 307.8 662.3 272.7 662.3 229.4V193.1H339.6V229.3C339.6 272.5 304.4 307.7 261.2 307.7 217.9 307.7 182.8 272.5 182.8 229.3V193.1H97.7V894.2H902.3V193.1H819ZM824.2 816.1H175.8V381.6H824.2V816.1Z",
+        "width": 1000
+      },
+      "search": [
+        "iconmonstr-calendar-5-icon"
+      ]
+    },
+    {
+      "uid": "531bc468eecbb8867d822f1c11f1e039",
+      "css": "calendar",
+      "code": 59398,
+      "src": "fontawesome"
+    },
+    {
+      "uid": "0d20938846444af8deb1920dc85a29fb",
+      "css": "uitloggen",
+      "code": 59399,
+      "src": "fontawesome"
+    },
+    {
+      "uid": "a65ca48f3fe7d6e5c60edbd943f4fdb6",
+      "css": "left-circled2",
+      "code": 59402,
+      "src": "fontawesome"
+    },
+    {
+      "uid": "6acd5cf005d48f96787350e72bd45688",
+      "css": "left",
+      "code": 59404,
+      "src": "entypo"
+    },
+    {
+      "uid": "9e67bfab0143d9511f8eef6897caeb88",
+      "css": "right",
+      "code": 59405,
+      "src": "entypo"
+    },
+    {
+      "uid": "3a6f0140c3a390bdb203f56d1bfdefcb",
+      "css": "meter",
+      "code": 59397,
+      "src": "entypo"
+    },
+    {
+      "uid": "x8m4z7b33cv1h2s784tjlam56uq40wtd",
+      "css": "lessen",
+      "code": 59395,
+      "src": "typicons"
+    },
+    {
+      "uid": "c60f50a1729165e3752fa27a16325208",
+      "css": "reply-outline",
+      "code": 59403,
+      "src": "typicons"
+    },
+    {
+      "uid": "cb8b402e2efdc57d6d37ad7d3da819fe",
+      "css": "stopwatch",
+      "code": 59396,
+      "src": "typicons"
+    },
+    {
+      "uid": "zc0c8s0nyweeeo9i8a3rucu7alwxt56r",
+      "css": "instellen",
+      "code": 59393,
+      "src": "modernpics"
+    },
+    {
+      "uid": "sz7wtylc6qrwcbsj8aowal9y22hu6lka",
+      "css": "calendar-alt",
+      "code": 59394,
+      "src": "modernpics"
+    },
+    {
+      "uid": "0ohst63cgq1mf1syayvfl8mphms8dbes",
+      "css": "tijden",
+      "code": 59392,
+      "src": "modernpics"
+    },
+    {
+      "uid": "1e32e1f8787cf3cb9f52f8850822dcb6",
+      "css": "instellingen",
+      "code": 59401,
+      "src": "elusive"
+    }
+  ]
+}
