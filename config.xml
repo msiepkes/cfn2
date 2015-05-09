@@ -22,7 +22,7 @@
 	<preference name="exit-on-suspend" value="false" />
 	<preference name="show-splash-screen-spinner" value="true" />
 	<preference name="auto-hide-splash-screen" value="true" />
-	<preference name="Orientation" value="landscape" />
+	<!--preference name="Orientation" value="portrait" /-->
 	<icon src="images/icon.png" />
 	<icon gap:density="ldpi" gap:platform="android" src="images/android/icon-36-ldpi.png" />
 	<icon gap:density="mdpi" gap:platform="android" src="images/android/icon-48-mdpi.png" />
