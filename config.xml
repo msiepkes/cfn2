@@ -9,6 +9,7 @@
 	
 	<name>Cardio Fitness Noord</name>
 	<description>Sportschool app</description>
+    	<preference name="permissions" value="none" />
 	
 	<author href="http://www.cardiofitness-noord.nl" email="app@cardiofitness-noord.nl">Martin Siepkes</author>
 	<!-- 
@@ -29,13 +30,14 @@
 	
 	
 	
-    <access origin="http://127.0.0.1*"/> <!-- allow local pages -->
-    <access origin="http://85.158.203.17*"/> <!-- allow requests from your server -->
-
+    <access origin="http://127.0.0.1*"/> <!-- allow local pages --> 
+    <access origin="http://www.cardiofitness-noord.nl" subdomains="true" />
+    <access origin="http://cardiofitness-noord.nl" subdomains="true" />
 
     <!-- <access origin="https://example.com" /> allow any secure requests to example.com -->
     <!-- <access origin="https://example.com" subdomains="true" /> such as above, but including subdomains, such as www -->
     <access origin=".*"/>
+    <access origin="*" />
 
     <log level="DEBUG"/>
     <preference name="useBrowserHistory" value="false" />
