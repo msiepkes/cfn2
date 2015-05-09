@@ -97,7 +97,7 @@
 						db.transaction(function (tx) { tx.executeSql("DROP TABLE UserProperties", [], null, onError); }); 
 					*/
 				
-				db.transaction(function (tx) { tx.executeSql("DROP TABLE Gebruiker", [], null, onError); });
+				//db.transaction(function (tx) { tx.executeSql("DROP TABLE Gebruiker", [], null, onError); });
 					/**/
 						db.transaction(function (tx) { tx.executeSql("CREATE TABLE IF NOT EXISTS Properties (id INTEGER PRIMARY KEY AUTOINCREMENT, schema NVARCHAR(20), lessen NVARCHAR(20), tijden NVARCHAR(20))", [], null, onError); });
 						db.transaction(function (tx) { tx.executeSql("CREATE TABLE IF NOT EXISTS Tijden (id INTEGER PRIMARY KEY AUTOINCREMENT, maandag NVARCHAR(50), dinsdag NVARCHAR(50), woensdag NVARCHAR(50), donderdag NVARCHAR(50), vrijdag NVARCHAR(50), zaterdag NVARCHAR(50), zondag NVARCHAR(50), content NTEXT)", [], null, onError); });
@@ -186,7 +186,7 @@
 							type: "POST",
 							crossOrigin: true,
 							crossDomain : true, 
-							xdata : { action: 'getUserId', emailadres: $('#amdemail').val(), password: $('#amdpassword').val() }, //werkt
+							data : { action: 'getUserId', emailadres: $('#amdemail').val(), password: $('#amdpassword').val() }, //werkt
 							dataType: "json",
 							url: 'http://www.cardiofitness-noord.nl/test.php',
 							success: function(data) {
