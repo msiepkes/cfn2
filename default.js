@@ -20,6 +20,11 @@
 					return d.getFullYear() + '/0' + (d.getMonth() + 1) + '/0' + d.getDate() + ' ' + d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds();
 				}
 				
+				$('#afsluiten').click(function(e) {
+					e.preventDefault();
+					navigator.app.exitApp();   
+				});
+				
 				$('#switch').change(function() {
 					$('.countdown').empty();
 					if($(this).is(':checked')){
@@ -121,6 +126,14 @@
 								
 								$('#naam').val(item['naam']);
 								$('#email').val(item['emailadres']);
+								
+								var hours = new Date().getHours(); 
+								var msg = 'Welkom';
+								if(hours<12) { msg = "Goedemorgen "; }
+								else if(hours<18) { msg = "Goedemiddag "; }
+								else { msg = "Goedenavond "; } 
+								
+								$('#welkomstekst').text(msg + item['naam']);
 							}
 						});
 					});
