@@ -59,7 +59,7 @@ float: left;
   }
 .ui-content {
   background: transparent; 
-  min-height: 350px;
+  min-height: 100%;
 }
 .ui-footer {
 	background: #f5d322 !important;
@@ -82,13 +82,17 @@ DIV.row DIV {
 	cursor: pointer;
 	text-transform: uppercase;
 	font-weight: 100;
+    position: relative;
 }
 DIV.row DIV>A {
 	text-decoration: none;
-	color: #fff !important;  
-	display: block;
-	height: 100%;
-	padding-top: 20px;
+	color: #fff !important;   
+    position: absolute;
+	bottom: 25%;
+	left: 25%;
+	right: 25%;
+	top: 25%;
+	margin-top: 10px;
 }
 DIV.row DIV>A>I {
 	font-size: 44px;

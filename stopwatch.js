@@ -59,7 +59,7 @@ return {
 		$('#uur').text('00');
 		$('#minuut').text('00');
 		$('#seconden').text('00');
-		$('#honderdste').text('000');
+		$('#honderdste').text('00');
 	},
 	start: function() {
 		s.stop = 0;

@@ -12,19 +12,16 @@
 
 </head>
 <body>
-
 <div data-role="page" id="pageone">
 	<div data-role="header" data-position="fixed">
 		<h1 id="welkomstekst">Welkom</h1> 
 		<div style="display: block; text-align:center"><img src="images/logo.png" style="margin-top: 5px;"></div>
 	</div>
-	
-	<div data-role="main" class="ui-content" style="padding: 0px;">	
+	<div data-role="main" id="home" class="ui-content" style="padding: 0px;">	
 		<div class="row"><div style="background-color: #f4d379;"><a href="#schema" data-transition="slide"><i class="demo-icon icon-schema">&#xe808;</i><br />Traingsschema</a></div><div style="background-color: #f2cd69;"><a href="#lessen" data-transition="slide"><i class="demo-icon icon-lessen">&#xe803;</i><br />Lessen</a></div></div>
 		<div class="row"><div style="background-color: #f2ca5a;"><a href="#tijden" data-transition="slide"><i class="demo-icon icon-tijden">&#xe800;</i><br />Openingstijden</a></div><div style="background-color: #f1c547;"><a href="#stopwatch" data-transition="slide"><i class="demo-icon icon-stopwatch">&#xe804;</i><br />Stopwatch</a></div></div>
 		<div class="row"><div style="background-color: #f1c241;"><a href="#instellingen" data-transition="slide"><i class="demo-icon icon-instellingen">&#xe809;</i><br />Gegevens</a></div><div style="background-color: #f1c135;"><a id="afsluiten" href="#afsluiten" data-transition="slide"><i class="demo-icon icon-uitloggen">&#xe807;</i><br />Afsluiten</a></div></div>
 	</div>
-	
 	<div data-role="footer" data-position="fixed">&nbsp;</div>
 </div>
 
@@ -176,7 +173,7 @@
 					<span class="eenheid">seconden</span>
 				</div>
 				<div class="part">
-					<span class="tellersmall" id="honderdste">000</span>
+					<span class="tellersmall" id="honderdste">00</span>
 				</div>
 			</div>
 			<div style="display: table-row; width: 100%;">
@@ -190,9 +187,6 @@
 	 
 		<table id="results"></table>
 	</div>
-	
-	
-	
 	<div data-role="footer" data-position="fixed">&nbsp;</div>
 </div> 
 
@@ -208,9 +202,7 @@
 		<label for="email">E-mail:</label><input type="email" name="email" id="email">
 		<br /><br />
       <input type="button" id="btnopslaan" data-inline="false" value="Opslaan">
-	
 	</div>
-	
 	<div data-role="footer" data-position="fixed">&nbsp;</div>
 </div>
 
@@ -221,17 +213,13 @@
 		<h1>Aanmelden</h1> 
 		<div style="display: block; text-align:center"><img src="images/logo.png" style="margin-top: 5px;"></div>
 	</div>
-	
 	<div data-role="main" class="ui-content">  
 		<label for="amdemail">E-mail:</label><input type="email" name="amdemail" id="amdemail" value="martin.siepkes@quicknet.nl">  
 		<label for="amdpassword">Wachtwoord:</label><input type="password" name="amdpassword" id="amdpassword" value="begin">  
 		<br /><br />
       <input type="button" id="btnaanmelden" data-inline="false" value="Aanmelden">
-	
 	</div>
-	
 	<div data-role="footer" data-position="fixed">&nbsp;</div>
 </div>
-
 </body>
 </html>

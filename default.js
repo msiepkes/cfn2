@@ -20,6 +20,9 @@
 					return d.getFullYear() + '/0' + (d.getMonth() + 1) + '/0' + d.getDate() + ' ' + d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds();
 				}
 				
+				var height = parseInt(($('body').height() - 88) / 3);
+				$('#home DIV.row').css('height', height + 'px');
+				
 				$('#afsluiten').click(function(e) {
 					e.preventDefault();
 					navigator.app.exitApp();   
