@@ -103,14 +103,7 @@
 				if (!window.openDatabase) {
 					alert('Databases are not supported in this browser.');
 				} else {
-					/*
-						db.transaction(function (tx) { tx.executeSql("DROP TABLE Properties", [], null, onError); });
-						db.transaction(function (tx) { tx.executeSql("DROP TABLE Tijden", [], null, onError); });
-						db.transaction(function (tx) { tx.executeSql("DROP TABLE Lessen", [], null, onError); });
-						db.transaction(function (tx) { tx.executeSql("DROP TABLE Gebruiker", [], null, onError); });
-						db.transaction(function (tx) { tx.executeSql("DROP TABLE Schema", [], null, onError); });
-						db.transaction(function (tx) { tx.executeSql("DROP TABLE UserProperties", [], null, onError); }); 
-					*/
+					
 				
 				//db.transaction(function (tx) { tx.executeSql("DROP TABLE Gebruiker", [], null, onError); });
 					/**/
@@ -170,6 +163,9 @@
 					}, onError); }); 
 				});
 				
+				
+				
+				
 				function checkProperties() {					
 					if(!schema) {
 						db.transaction(function (tx) { tx.executeSql("INSERT INTO Properties (schema, lessen, tijden) VALUES (?, ?, ?)", ['2015-05-03 23:00:00', '2015-05-03 23:00:00', '2015-05-03 23:00:00'], null, onError); });
@@ -185,9 +181,9 @@
 							url: 'http://www.cardiofitness-noord.nl/test.php',
 							success: function(data) {
 								if(data.validuser) {
-									if(data.schema != schema) { $('.loaderframe').show(); updates++; alert('bijwerken schema'); bijwerkenSchema(data.schema); } else { laadSchema(); }
-									if(data.lessen != lessen) { $('.loaderframe').show(); updates++; alert('bijwerken lessen'); bijwerkenLessen(data.lessen); } else { laadLessen(); }
-									if(data.tijden != tijden) { $('.loaderframe').show(); updates++; alert('bijwerken tijden'); bijwerkenTijden(data.tijden); } else { laadTijden(); }									
+									if(data.schema != schema) { $('.loaderframe').show(); updates++; bijwerkenSchema(data.schema); } else { laadSchema(); }
+									if(data.lessen != lessen) { $('.loaderframe').show(); updates++; bijwerkenLessen(data.lessen); } else { laadLessen(); }
+									if(data.tijden != tijden) { $('.loaderframe').show(); updates++; bijwerkenTijden(data.tijden); } else { laadTijden(); }									
 								} else {
 									alert('Geen geldige gebruiker!');
 									return;
@@ -202,9 +198,10 @@
 					}
 				}
 				
+				
+				
 				$('#btnaanmelden').click(function(e) {
 					e.preventDefault();
-					alert('aanmelden1');
 					$.ajax({
 							type: "POST",
 							crossOrigin: true,
@@ -213,7 +210,6 @@
 							dataType: "json",
 							url: 'http://www.cardiofitness-noord.nl/test.php',
 							success: function(data) {
-					alert('aanmelden2');
 								if(data.validuser) {
 									db.transaction(function (tx) { tx.executeSql("INSERT INTO Gebruiker (naam, emailadres, lidnr) VALUES (?, ?, ?)", [data.name, $('#amdemail').val(), data.lidnr], haalProperties(), onError); });
 								} else {
@@ -221,8 +217,6 @@
 									return;
 								}
 							}, error: function(data) { 
-					alert('aanmelden3');
-					alert(data);
 								var t=1;
 							}
 						});
@@ -230,7 +224,10 @@
 				
 				
 				
+				
+				
 				function bijwerkenSchema(datumtijd) {
+					//alert('bijwerken schema'); 
 					$.ajax({
 						type: "POST",
 						crossOrigin: true,
@@ -257,7 +254,7 @@
 					laadSchema();
 				}
 				function laadSchema() {
-					alert('laad schema');
+					//alert('laad schema');
 				}
 				
 				
