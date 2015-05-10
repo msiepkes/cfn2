@@ -28,10 +28,15 @@
 				
 				$('#afsluiten').click(function(e) {
 					e.preventDefault();
+					alert('x1');
 					if(navigator.app){
+					alert('x2');
 						navigator.app.exitApp();
+					alert('x3');
 					}else if(navigator.device){
+					alert('x4');
 						navigator.device.exitApp();
+					alert('x5');
 					}
 				});
 				
