@@ -18,9 +18,9 @@
 		<div style="display: block; text-align:center"><img src="images/logo.png" style="margin-top: 5px;"></div>
 	</div>
 	<div data-role="main" id="home" class="ui-content" style="padding: 0px;">	
-		<div class="row"><div style="background-color: #f4d379;"><a href="#schema" data-transition="slide"><i class="demo-icon icon-schema">&#xe808;</i><br />Traingsschema</a></div><div style="background-color: #f2cd69;"><a href="#lessen" data-transition="slide"><i class="demo-icon icon-lessen">&#xe803;</i><br />Lessen</a></div></div>
-		<div class="row"><div style="background-color: #f2ca5a;"><a href="#tijden" data-transition="slide"><i class="demo-icon icon-tijden">&#xe800;</i><br />Openingstijden</a></div><div style="background-color: #f1c547;"><a href="#stopwatch" data-transition="slide"><i class="demo-icon icon-stopwatch">&#xe804;</i><br />Stopwatch</a></div></div>
-		<div class="row"><div style="background-color: #f1c241;"><a href="#instellingen" data-transition="slide"><i class="demo-icon icon-instellingen">&#xe809;</i><br />Gegevens</a></div><div style="background-color: #f1c135;"><a id="afsluiten" href="#afsluiten" data-transition="slide"><i class="demo-icon icon-uitloggen">&#xe807;</i><br />Afsluiten</a></div></div>
+		<div class="row"><div style="background-color: #f4d379;"><a href="#schema" data-transition="fade"><i class="demo-icon icon-schema">&#xe808;</i><br />Traingsschema</a></div><div style="background-color: #f2cd69;"><a href="#lessen" data-transition="fade"><i class="demo-icon icon-lessen">&#xe803;</i><br />Lessen</a></div></div>
+		<div class="row"><div style="background-color: #f2ca5a;"><a href="#tijden" data-transition="fade"><i class="demo-icon icon-tijden">&#xe800;</i><br />Openingstijden</a></div><div style="background-color: #f1c547;"><a href="#stopwatch" data-transition="fade"><i class="demo-icon icon-stopwatch">&#xe804;</i><br />Stopwatch</a></div></div>
+		<div class="row"><div style="background-color: #f1c241;"><a href="#instellingen" data-transition="fade"><i class="demo-icon icon-instellingen">&#xe809;</i><br />Gegevens</a></div><div style="background-color: #f1c135;"><a id="afsluiten" href="#afsluiten" data-transition="fade"><i class="demo-icon icon-uitloggen">&#xe807;</i><br />Afsluiten</a></div></div>
 	</div>
 	<div data-role="footer" data-position="fixed">&nbsp;</div>
 </div>
@@ -29,7 +29,7 @@
 
 <div data-role="page" id="schema" class="schema">
 	<div data-role="header" data-position="fixed">
-	<a class="demo-icon icon-reply-outline" role="link" data-rel="back" data-transition="slide" data-direction="reverse">&#xe80b;</a> 
+	<a class="demo-icon icon-reply-outline" role="link" data-rel="back" data-transition="fade" data-direction="reverse">&#xe80b;</a> 
 		<h1>Traingsschema</h1> 
 		<div style="display: block; text-align:center"><img src="images/logo.png" style="margin-top: 5px;"></div>
 		<div class="dagschema"><i class="demo-icon icon-left">&#xe80c;</i><span>schema 1</span><i class="demo-icon icon-right">&#xe80d;</i></div>
@@ -105,42 +105,44 @@
 
 <div data-role="page" id="lessen" class="lessen">
 	<div data-role="header" data-position="fixed">
-	<a class="demo-icon icon-reply-outline" role="link" data-rel="back" data-transition="slide" data-direction="reverse">&#xe80b;</a> 
+	<a class="demo-icon icon-reply-outline" role="link" data-rel="back" data-transition="fade" data-direction="reverse">&#xe80b;</a> 
 		<h1>Lessen</h1> 
 		<div style="display: block; text-align:center"><img src="images/logo.png" style="margin-top: 5px;"></div>
-	</div>
-	
+	</div>	
 	<div data-role="main" class="ui-content">
 		<ul data-role="listview" data-autodividers="false" data-inset="true"></ul>
 	</div>
-	
 	<div data-role="footer" data-position="fixed">&nbsp;</div>
 </div>
 
+
+
+
+
+
 <div data-role="page" id="tijden">
 	<div data-role="header" data-position="fixed">
-	<a class="demo-icon icon-reply-outline" role="link" data-rel="back" data-transition="slide" data-direction="reverse">&#xe80b;</a> 
+	<a class="demo-icon icon-reply-outline" role="link" data-rel="back" data-transition="fade" data-direction="reverse">&#xe80b;</a> 
 		<h1>Openingstijden</h1> 
 		<div style="display: block; text-align:center"><img src="images/logo.png" style="margin-top: 5px;"></div>
 	</div>
-	
 	<div data-role="main" class="ui-content openingstijden">
-	<h3 class="dag">Reguliere openingstijden</h3>
-	<div id="regulier"></div>
-	<!--<div class="dag"><span>maandag:</span>08:00&nbsp;&nbsp;-&nbsp;&nbsp;22:30</div><div class="dag"><span>dinsdag:</span>08:00&nbsp;&nbsp;-&nbsp;&nbsp;22:30</div><div class="dag"><span>woensdag:</span>08:00&nbsp;&nbsp;-&nbsp;&nbsp;22:30</div><div class="dag"><span>donderdag:</span>08:00&nbsp;&nbsp;-&nbsp;&nbsp;22:30</div><div class="dag"><span>vrijdag:</span>08:00&nbsp;&nbsp;-&nbsp;&nbsp;22:30</div><div class="dag"><span>zaterdag:</span>09:00&nbsp;&nbsp;-&nbsp;&nbsp;17:00</div><div class="dag"><span>zondag:</span>09:00&nbsp;&nbsp;-&nbsp;&nbsp;17:00</div>-->
-	<br />
-	<br />
-	<h3 class="dag">Openingstijden feestdagen</h3>
-	<div id="feestdagen"></div>
-	<!--1 januari - Gesloten<br>1e paasdag - Gesloten<br>2e paasdag - Gesloten<br>27 april - Gesloten<br>Hemelvaartsdag - Gesloten<br>1e en 2e Pinksterdag - Gesloten<br>24 december - Gesloten vanaf 17.00 uur<br>1e kerstdag - Gesloten<br>2e kerstdag - Geopend van 9.00 t/m 11.00 uur<br>31 december - Gesloten vanaf 17.00 uur    -->
+		<h3 class="dag">Reguliere openingstijden</h3>
+		<div id="regulier"></div>
+		<br />
+		<br />
+		<h3 class="dag">Openingstijden feestdagen</h3>
+		<div id="feestdagen"></div>
 	</div>
-	
 	<div data-role="footer" data-position="fixed">&nbsp;</div>
 </div> 
 
+
+
+
 <div data-role="page" id="stopwatch" class="stopwatch">
 	<div data-role="header" data-position="fixed">
-	<a class="demo-icon icon-reply-outline" role="link" data-rel="back" data-transition="slide" data-direction="reverse">&#xe80b;</a> 
+	<a class="demo-icon icon-reply-outline" role="link" data-rel="back" data-transition="fade" data-direction="reverse">&#xe80b;</a> 
 		<h1>Stopwatch</h1> 
 		<div style="display: block; text-align:center"><img src="images/logo.png" style="margin-top: 5px;"></div>
 	</div>
@@ -153,12 +155,7 @@
 		  <input id="stopwatchbutton4" type="button" data-inline="true" value="Reset"> 
 		</div><br /><br />
 		<div style="display: table; width: 100%; text-align: center; position: relative">
-		 <i class="demo-icon" style="
-			position: absolute;
-			top: 16px;
-			left: 10px;
-			font-size: 12px;
-		">&#xe804;</i>			
+		 <i class="demo-icon" style="position: absolute;top: 16px;left: 10px;font-size: 12px;">&#xe804;</i>			
 			<div style="display: table-row; width: 100%; text-align: center;">
 				<div class="part">
 					<span class="teller" id="uur">00</span>
@@ -176,32 +173,28 @@
 					<span class="tellersmall" id="honderdste">00</span>
 				</div>
 			</div>
-			<div style="display: table-row; width: 100%;">
-				<br />
-			</div> 
-		
+			<div style="display: table-row; width: 100%;"><br /></div> 
 		</div>
-		<div id="laps" style="display: table; width: 100%; text-align: center; line-height: 26px;">
-		
-		</div>
-	 
-		<table id="results"></table>
+		<div id="laps" style="display: table; width: 100%; text-align: center; line-height: 26px;"></div>
 	</div>
 	<div data-role="footer" data-position="fixed">&nbsp;</div>
 </div> 
 
+
+
+
+
 <div data-role="page" id="instellingen">
 	<div data-role="header" data-position="fixed">
-	<a class="demo-icon icon-reply-outline" role="link" data-rel="back" data-transition="slide" data-direction="reverse">&#xe80b;</a> 
+	<a class="demo-icon icon-reply-outline" role="link" data-rel="back" data-transition="fade" data-direction="reverse">&#xe80b;</a> 
 		<h1>Gegevens</h1> 
 		<div style="display: block; text-align:center"><img src="images/logo.png" style="margin-top: 5px;"></div>
 	</div>
-	
 	<div data-role="main" class="ui-content"> 
 		<label for="naam">Naam:</label><input type="text" name="naam" id="naam">  
 		<label for="email">E-mail:</label><input type="email" name="email" id="email">
 		<br /><br />
-      <input type="button" id="btnopslaan" data-inline="false" value="Opslaan">
+		<input type="button" id="btnopslaan" data-inline="false" value="Opslaan">
 	</div>
 	<div data-role="footer" data-position="fixed">&nbsp;</div>
 </div>
@@ -217,9 +210,13 @@
 		<label for="amdemail">E-mail:</label><input type="email" name="amdemail" id="amdemail" value="martin.siepkes@quicknet.nl">  
 		<label for="amdpassword">Wachtwoord:</label><input type="password" name="amdpassword" id="amdpassword" value="begin">  
 		<br /><br />
-      <input type="button" id="btnaanmelden" data-inline="false" value="Aanmelden">
+		<input type="button" id="btnaanmelden" data-inline="false" value="Aanmelden">
 	</div>
 	<div data-role="footer" data-position="fixed">&nbsp;</div>
 </div>
+
+
+
+<div class="loaderframe"><div>&nbsp;</div>Bezig met bijwerken gegevens...</div>
 </body>
 </html>

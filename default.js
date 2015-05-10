@@ -1,5 +1,8 @@
 
 			$(document).ready(function() {
+				$('.loaderframe').hide();
+				var updates = 0;
+									   
 				function dateAdd(date, interval, units) {
 				  var ret = new Date(date); //don't change original date
 				  switch(interval.toLowerCase()) {
@@ -25,7 +28,11 @@
 				
 				$('#afsluiten').click(function(e) {
 					e.preventDefault();
-					navigator.app.exitApp();   
+					if(navigator.app){
+						navigator.app.exitApp();
+					}else if(navigator.device){
+						navigator.device.exitApp();
+					}
 				});
 				
 				$('#switch').change(function() {
@@ -178,9 +185,9 @@
 							url: 'http://www.cardiofitness-noord.nl/test.php',
 							success: function(data) {
 								if(data.validuser) {
-									if(data.schema != schema) { alert('bijwerken schema'); bijwerkenSchema(); } else { laadSchema(); }
-									if(data.lessen != lessen) { alert('bijwerken lessen'); bijwerkenLessen(); } else { laadLessen(); }
-									if(data.tijden != tijden) { alert('bijwerken tijden'); bijwerkenTijden(); } else { laadTijden(); }
+									if(data.schema != schema) { $('.loaderframe').show(); updates++; alert('bijwerken schema'); bijwerkenSchema(data.schema); } else { laadSchema(); }
+									if(data.lessen != lessen) { $('.loaderframe').show(); updates++; alert('bijwerken lessen'); bijwerkenLessen(data.lessen); } else { laadLessen(); }
+									if(data.tijden != tijden) { $('.loaderframe').show(); updates++; alert('bijwerken tijden'); bijwerkenTijden(data.tijden); } else { laadTijden(); }									
 								} else {
 									alert('Geen geldige gebruiker!');
 									return;
@@ -223,7 +230,7 @@
 				
 				
 				
-				function bijwerkenSchema() {
+				function bijwerkenSchema(datumtijd) {
 					$.ajax({
 						type: "POST",
 						crossOrigin: true,
@@ -238,6 +245,9 @@
 							//db.transaction(function (tx) { tx.executeSql("INSERT INTO Tijden (maandag, dinsdag, woensdag, donderdag, vrijdag, zaterdag, zondag, content) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", [data.maandag, data.dinsdag, data.woensdag, data.donderdag, data.vrijdag, data.zaterdag, data.zondag, data.content], laadTijden, onError); });
 							
 							//db.transaction(function (tx) { tx.executeSql("UPDATE Properties SET tijden = ?", ['2015-05-06 23:00:01'], null, onError); });
+							
+							updates--;
+							if(updates == 0){ $('.loaderframe').hide(); }
 						},
 						error: function(data){
 							var tt1=1;
@@ -250,7 +260,13 @@
 					alert('laad schema');
 				}
 				
-				function bijwerkenLessen() {
+				
+				
+				
+				
+				
+				
+				function bijwerkenLessen(datumtijd) {
 					db.transaction(function (tx) { tx.executeSql("DELETE FROM Lessen", null, null, onError); });
 					
 					$.ajax({
@@ -270,8 +286,13 @@
 									db.transaction(function (tx) { tx.executeSql("INSERT INTO Lessen (dag, tijd, tekst) VALUES (?, ?, ?)", [dag, tijd, tekst], null, onError); });							
 								}); 
 							});
-							db.transaction(function (tx) { tx.executeSql("UPDATE Properties SET lessen = ?", ['2015-05-03 22:06:00'], null, onError); });
+							db.transaction(function (tx) { tx.executeSql("UPDATE Properties SET lessen = ?", [datumtijd], null, onError); });
+							updates--;
+							if(updates == 0){ $('.loaderframe').hide(); }
 							laadLessen();
+						},
+						error: function(data) {
+							var t=1;
 						}
 					});
 				}
@@ -281,7 +302,7 @@
 					var prevdag = -1;
 					
 					db.transaction(function (tx) {
-						tx.executeSql("SELECT dag, tijd, tekst FROM Lessen ORDER BY dag, tijd", [], function (tx, result) {
+						tx.executeSql("SELECT dag, tijd, tekst FROM Lessen ", [], function (tx, result) {
 							dataset = result.rows;
 							if(dataset.length > 0) {
 								for(i=0;i<dataset.length;i++) {
@@ -313,7 +334,13 @@
 					});
 				}
 				
-				function bijwerkenTijden() {
+				
+				
+				
+				
+				
+				
+				function bijwerkenTijden(datumtijd) {
 					$.ajax({
 						type: "POST",
 						crossOrigin: true,
@@ -325,7 +352,9 @@
 							db.transaction(function (tx) { tx.executeSql("DELETE FROM Tijden", null, null, onError); });
 							db.transaction(function (tx) { tx.executeSql("INSERT INTO Tijden (maandag, dinsdag, woensdag, donderdag, vrijdag, zaterdag, zondag, content) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", [data.maandag, data.dinsdag, data.woensdag, data.donderdag, data.vrijdag, data.zaterdag, data.zondag, data.content], laadTijden, onError); });
 							
-							db.transaction(function (tx) { tx.executeSql("UPDATE Properties SET tijden = ?", ['2015-05-03 22:06:00'], null, onError); });
+							db.transaction(function (tx) { tx.executeSql("UPDATE Properties SET tijden = ?", [datumtijd], null, onError); });
+							updates--;
+							if(updates == 0){ $('.loaderframe').hide(); }
 						}
 					});
 				}

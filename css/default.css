@@ -94,6 +94,27 @@ DIV.row DIV>A {
 	top: 25%;
 	margin-top: 10px;
 }
+DIV.loaderframe {
+  position: absolute;
+  z-index: 99999;
+  left: 0px;
+  right: 0px;
+  top: 47%;
+  background-color: #fff;
+  padding: 40px;
+  opacity: 0.8;
+  text-align: center;
+  font-size: 10px; 
+}
+DIV.loaderframe>DIV {
+	background-color: #000099; 
+	height: 11px; 
+	width: 100%;
+	background-image: url(../images/loading.gif); 
+	border: 1px solid #878787; 
+	border-radius: 2px;
+}
+
 DIV.row DIV>A>I {
 	font-size: 44px;
 	display: inline-block;
