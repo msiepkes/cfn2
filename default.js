@@ -28,9 +28,7 @@
 				
 				$('#afsluiten').click(function(e) {
 					e.preventDefault();
-					alert('x1');
                 	setTimeout( function() { navigator.app.exitApp(); }); 
-					alert('x2');  
 				});
 				
 				$('#switch').change(function() {
