@@ -101,8 +101,8 @@
 				} else {
 					
 				
-				db.transaction(function (tx) { tx.executeSql("DROP TABLE `Properties`", [], null, onError); });
-				db.transaction(function (tx) { tx.executeSql("DROP TABLE `Schema`", [], null, onError); });
+				//db.transaction(function (tx) { tx.executeSql("DROP TABLE `Properties`", [], null, onError); });
+				//db.transaction(function (tx) { tx.executeSql("DROP TABLE `Schema`", [], null, onError); });
 					/**/
 						db.transaction(function (tx) { tx.executeSql("CREATE TABLE IF NOT EXISTS Properties (id INTEGER PRIMARY KEY AUTOINCREMENT, schema NVARCHAR(20), lessen NVARCHAR(20), tijden NVARCHAR(20))", [], null, onError); });
 						db.transaction(function (tx) { tx.executeSql("CREATE TABLE IF NOT EXISTS Tijden (id INTEGER PRIMARY KEY AUTOINCREMENT, maandag NVARCHAR(50), dinsdag NVARCHAR(50), woensdag NVARCHAR(50), donderdag NVARCHAR(50), vrijdag NVARCHAR(50), zaterdag NVARCHAR(50), zondag NVARCHAR(50), content NTEXT)", [], null, onError); });
@@ -254,18 +254,73 @@
 							var tt1=1;
 						}
 					});
-				
 					laadSchema();
 				}
-				
 				function laadSchema() {
-					//alert('laad schema');
+					var prevdag = -1;
+					
+					db.transaction(function (tx) {
+						tx.executeSql("SELECT id, dag, soort, categorie, afbeelding, naam, tijdsduur, afstand, sets, herhalingen, gewicht, opmerking FROM `Schema` ORDER BY dag, id ", [], function (tx, result) {
+							dataset = result.rows;
+							if(dataset.length > 0) {
+								for(i=0;i<dataset.length;i++) {
+									item = dataset.item(i);
+									
+									if(parseInt(item['dag']) != prevdag) {
+										var div = $('<div />').addClass('sch').css('position', 'relative').attr('data-name', 'schema ' + item['dag']);
+										var ul =  $('<ul />').attr('data-role', 'listview').attr('data-inset', 'true').addClass('ui-listview ui-listview-inset ui-corner-all ui-shadow');
+										ul.appendTo(div);
+										
+										div.appendTo($('#schemas'));
+									}
+									
+									var ul = $('#schemas').find('div[data-name="schema ' + item['dag'] + '"]').find('UL');
+									var li = $('<li />').attr('data-icon', 'check').addClass('ui-li-has-thumb');
+									var a = $('<a />').attr('href', '#training').attr('nr', item['id']).addClass('checked ui-btn ui-btn-icon-right ui-icon-check');
+									$('<img />').attr('src', 'http://schema.cardiofitness-noord.nl/equipment/' + item['categorie'] + '/' + item['afbeelding']).addClass('icon').appendTo(a);
+									$('<h2 />').html(item['naam']).appendTo(a);
+									
+									if (item['soort'] == 'gewicht') {
+										$('<p />').html('<strong>Aantal sets:</strong> ' + item['sets'] + ' stuks<br /><strong>Aantal herhalingen:</strong> ' + item['herhalingen'] + ' stuks<br /><strong>Gewicht:</strong> ' + item['gewicht'] + ' kg<br />' + item['opmerking']).appendTo(a);
+									} else {
+										$('<p />').html('<strong>Afstand:</strong> ' + item['afstand'] + ' km<br /><strong>Tijdsduur:</strong> ' + item['tijdsduur'] + ' minuten<br />' + item['opmerking']).appendTo(a);
+									}
+									a.appendTo(li);
+									li.appendTo(ul); 
+									
+									prevdag = parseInt(item['dag']); 
+								}
+								
+								$('#schemas div[data-name]:not(:first)').hide(); 
+								$('#schemas div[data-name] UL').each(function(item, i){ 
+									item.find('li:first').addClass('ui-first-child');
+									item.find('li:last').addClass('ui-last-child');
+								});
+								 
+							}
+						});
+					});
 				}
 				
 				
-				
-				
-				
+				$('body').on('click', 'A[href=#training]', function(e){ 
+					e.preventDefault();
+					
+					var nr = $(this).attr('nr');
+					db.transaction(function (tx) {
+						tx.executeSql("SELECT id, dag, soort, categorie, afbeelding, naam, tijdsduur, afstand, sets, herhalingen, gewicht, opmerking FROM `Schema` WHERE (id = ?)", [nr], function (tx, result) {
+							dataset = result.rows;
+							if(dataset.length > 0) {
+								item = dataset.item(0);
+									
+								//$('#training H1').html(item['naam']);
+								$('#training IMG.bigger').attr('src', 'http://schema.cardiofitness-noord.nl/equipment/' + item['categorie'] + '/' + item['afbeelding']);
+									
+								$.mobile.changePage( "#training", { transition: "slideup", changeHash: false }); 
+							} 
+						});
+					});
+				});
 				
 				
 				function bijwerkenLessen(datumtijd) {
