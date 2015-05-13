@@ -101,12 +101,13 @@
 				} else {
 					
 				
-				//db.transaction(function (tx) { tx.executeSql("DROP TABLE Gebruiker", [], null, onError); });
+				db.transaction(function (tx) { tx.executeSql("DROP TABLE `Properties`", [], null, onError); });
+				db.transaction(function (tx) { tx.executeSql("DROP TABLE `Schema`", [], null, onError); });
 					/**/
 						db.transaction(function (tx) { tx.executeSql("CREATE TABLE IF NOT EXISTS Properties (id INTEGER PRIMARY KEY AUTOINCREMENT, schema NVARCHAR(20), lessen NVARCHAR(20), tijden NVARCHAR(20))", [], null, onError); });
 						db.transaction(function (tx) { tx.executeSql("CREATE TABLE IF NOT EXISTS Tijden (id INTEGER PRIMARY KEY AUTOINCREMENT, maandag NVARCHAR(50), dinsdag NVARCHAR(50), woensdag NVARCHAR(50), donderdag NVARCHAR(50), vrijdag NVARCHAR(50), zaterdag NVARCHAR(50), zondag NVARCHAR(50), content NTEXT)", [], null, onError); });
 						db.transaction(function (tx) { tx.executeSql("CREATE TABLE IF NOT EXISTS Lessen (id INTEGER PRIMARY KEY AUTOINCREMENT, dag INT(11), tijd NVARCHAR(20), tekst NVARCHAR(255))", [], null, onError); });
-						db.transaction(function (tx) { tx.executeSql("CREATE TABLE IF NOT EXISTS Schema (id INTEGER PRIMARY KEY AUTOINCREMENT, dag INT(11), afbeelding NVARCHAR(250), naam NVARCHAR(250), snelheid NVARCHAR(10), afstand NVARCHAR(10), sets NVARCHAR(10), herhalingen NVARCHAR(10), gewicht NVARCHAR(10))", [], null, onError); });
+						db.transaction(function (tx) { tx.executeSql("CREATE TABLE IF NOT EXISTS Schema (id INTEGER PRIMARY KEY AUTOINCREMENT, dag INT(11), soort NVARCHAR(250), categorie NVARCHAR(250), afbeelding NVARCHAR(250),  naam NVARCHAR(250), tijdsduur NVARCHAR(10), afstand NVARCHAR(10), sets NVARCHAR(10), herhalingen NVARCHAR(10), gewicht NVARCHAR(10), opmerking NTEXT)", [], null, onError); });
 						db.transaction(function (tx) { tx.executeSql("CREATE TABLE IF NOT EXISTS Gebruiker (id INTEGER PRIMARY KEY AUTOINCREMENT, naam NVARCHAR(250), emailadres NVARCHAR(250), lidnr INT(11))", [], haalProperties, onError); });
 					
 					
@@ -223,24 +224,31 @@
 				
 				
 				function bijwerkenSchema(datumtijd) {
-					//alert('bijwerken schema'); 
 					$.ajax({
 						type: "POST",
 						crossOrigin: true,
 						crossDomain : true,
 						data : { action: 'getSchema', lidnr: lidnr }, //werkt
-               			//data: "{action: 'getSchema', lidnr: " + lidnr + "}", 
 						dataType: "json",
 						url: 'http://www.cardiofitness-noord.nl/test.php',
 						success: function(data) {
-							var tt1=1;
-							//db.transaction(function (tx) { tx.executeSql("DELETE FROM Tijden", null, null, onError); });
-							//db.transaction(function (tx) { tx.executeSql("INSERT INTO Tijden (maandag, dinsdag, woensdag, donderdag, vrijdag, zaterdag, zondag, content) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", [data.maandag, data.dinsdag, data.woensdag, data.donderdag, data.vrijdag, data.zaterdag, data.zondag, data.content], laadTijden, onError); });
+							db.transaction(function (tx) { tx.executeSql("DELETE FROM `Schema`", null, null, onError); });
 							
-							//db.transaction(function (tx) { tx.executeSql("UPDATE Properties SET tijden = ?", ['2015-05-06 23:00:01'], null, onError); });
+							if(data.schema) {
+								$(data.schema).each(function(i, item) {
+									var dag = item.nr;
+									if(item.oefeningen.length > 0) {
+										$(item.oefeningen).each(function(u, oefening) {
+											 db.transaction(function (tx) { tx.executeSql("INSERT INTO `Schema` (dag, soort, afbeelding, categorie, naam, tijdsduur, afstand, sets, herhalingen, gewicht, opmerking) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [dag, oefening.soort, oefening.afbeelding, oefening.categorie, oefening.naam, oefening.tijdsduur, oefening.afstand, oefening.sets, oefening.herhalingen, oefening.gewicht, oefening.opmerking], null, onError); });
+										});
+									}
+								});
+							} 
 							
+							db.transaction(function (tx) { tx.executeSql("UPDATE Properties SET `schema` = ?", [datumtijd], null, onError); });
 							updates--;
 							if(updates == 0){ $('.loaderframe').hide(); }
+							laadSchema();
 						},
 						error: function(data){
 							var tt1=1;
@@ -249,6 +257,7 @@
 				
 					laadSchema();
 				}
+				
 				function laadSchema() {
 					//alert('laad schema');
 				}
