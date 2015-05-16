@@ -101,8 +101,8 @@
 				} else {
 					
 				
-				db.transaction(function (tx) { tx.executeSql("DROP TABLE `Gebruiker`", [], null, onError); });
-				db.transaction(function (tx) { tx.executeSql("DROP TABLE `Schema`", [], null, onError); });
+				//db.transaction(function (tx) { tx.executeSql("DROP TABLE `Gebruiker`", [], null, onError); });
+				//db.transaction(function (tx) { tx.executeSql("DROP TABLE `Schema`", [], null, onError); });
 				
 					/**/
 						db.transaction(function (tx) { tx.executeSql("CREATE TABLE IF NOT EXISTS Properties (id INTEGER PRIMARY KEY AUTOINCREMENT, schema NVARCHAR(20), lessen NVARCHAR(20), tijden NVARCHAR(20))", [], null, onError); });
