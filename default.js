@@ -101,15 +101,16 @@
 				} else {
 					
 				
-				//db.transaction(function (tx) { tx.executeSql("DROP TABLE `Properties`", [], null, onError); });
-				//db.transaction(function (tx) { tx.executeSql("DROP TABLE `Schema`", [], null, onError); });
+				db.transaction(function (tx) { tx.executeSql("DROP TABLE `Gebruiker`", [], null, onError); });
+				db.transaction(function (tx) { tx.executeSql("DROP TABLE `Schema`", [], null, onError); });
+				
 					/**/
 						db.transaction(function (tx) { tx.executeSql("CREATE TABLE IF NOT EXISTS Properties (id INTEGER PRIMARY KEY AUTOINCREMENT, schema NVARCHAR(20), lessen NVARCHAR(20), tijden NVARCHAR(20))", [], null, onError); });
 						db.transaction(function (tx) { tx.executeSql("CREATE TABLE IF NOT EXISTS Tijden (id INTEGER PRIMARY KEY AUTOINCREMENT, maandag NVARCHAR(50), dinsdag NVARCHAR(50), woensdag NVARCHAR(50), donderdag NVARCHAR(50), vrijdag NVARCHAR(50), zaterdag NVARCHAR(50), zondag NVARCHAR(50), content NTEXT)", [], null, onError); });
 						db.transaction(function (tx) { tx.executeSql("CREATE TABLE IF NOT EXISTS Lessen (id INTEGER PRIMARY KEY AUTOINCREMENT, dag INT(11), tijd NVARCHAR(20), tekst NVARCHAR(255))", [], null, onError); });
-						db.transaction(function (tx) { tx.executeSql("CREATE TABLE IF NOT EXISTS Schema (id INTEGER PRIMARY KEY AUTOINCREMENT, dag INT(11), soort NVARCHAR(250), categorie NVARCHAR(250), afbeelding NVARCHAR(250),  naam NVARCHAR(250), tijdsduur NVARCHAR(10), afstand NVARCHAR(10), sets NVARCHAR(10), herhalingen NVARCHAR(10), gewicht NVARCHAR(10), opmerking NTEXT)", [], null, onError); });
-						db.transaction(function (tx) { tx.executeSql("CREATE TABLE IF NOT EXISTS Gebruiker (id INTEGER PRIMARY KEY AUTOINCREMENT, naam NVARCHAR(250), emailadres NVARCHAR(250), lidnr INT(11))", [], haalProperties, onError); });
-					
+						db.transaction(function (tx) { tx.executeSql("CREATE TABLE IF NOT EXISTS Schema (id INTEGER PRIMARY KEY AUTOINCREMENT, schemaid INT(11), dag INT(11), soort NVARCHAR(250), categorie NVARCHAR(250), afbeelding NVARCHAR(250), nummer INT(11), naam NVARCHAR(250), tijdsduur NVARCHAR(10), afstand NVARCHAR(10), sets NVARCHAR(10), herhalingen NVARCHAR(10), gewicht NVARCHAR(10), opmerking NTEXT)", [], null, onError); });
+						db.transaction(function (tx) { tx.executeSql("CREATE TABLE IF NOT EXISTS Gebruiker (id INTEGER PRIMARY KEY AUTOINCREMENT, naam NVARCHAR(250), emailadres NVARCHAR(250), lidnr INT(11), lengte INT(11), gewicht INT(11))", [], null, onError); });
+						db.transaction(function (tx) { tx.executeSql("CREATE TABLE IF NOT EXISTS Uitgevoerd (id INTEGER PRIMARY KEY AUTOINCREMENT, Dag INT(11), Oefening INT(11), Schemaid INT(11), Oordeel INT(11))", [], haalProperties, onError); });
 					
 				}
 				
@@ -117,7 +118,7 @@
 				
 				function haalProperties() {
 					db.transaction(function (tx) {
-						tx.executeSql("SELECT emailadres, lidnr, naam FROM Gebruiker LIMIT 0,1", [], function (tx, result) {
+						tx.executeSql("SELECT emailadres, lidnr, naam, lengte, gewicht FROM Gebruiker LIMIT 0,1", [], function (tx, result) {
 							dataset = result.rows;
 							if(dataset.length > 0) {
 								item = dataset.item(0);				
@@ -126,6 +127,8 @@
 								
 								$('#naam').val(item['naam']);
 								$('#email').val(item['emailadres']);
+								$('#lengte').val(item['lengte']);
+								$('#gewicht').val(item['gewicht']);
 								
 								var hours = new Date().getHours(); 
 								var msg = 'Welkom';
@@ -150,12 +153,15 @@
 							
 							checkProperties();
 						});
+						
+						//kijk of er items in Uitgevoerd staan en deze doorsturen naar cfn online
+						alert('check uitgevoerd');
 					});
 				}
 				
 				$('#btnopslaan').click(function(e){ 
 					e.preventDefault(); 
-					db.transaction(function (tx) { tx.executeSql("UPDATE Gebruiker SET emailadres=?, naam=?", [$('#email').val(), $('#naam').val()], function() {
+					db.transaction(function (tx) { tx.executeSql("UPDATE Gebruiker SET emailadres=?, naam=?, lengte=?, gewicht=?", [$('#email').val(), $('#naam').val(), $('#lengte').val(), $('#gewicht').val()], function() {
 						alert('De gegevens zijn opgeslagen');
 					}, onError); }); 
 				});
@@ -191,7 +197,7 @@
 							}
 						});
 					} else { 
-						$.mobile.changePage( "#aanmelden", { transition: "slideup", changeHash: false }); 
+						$.mobile.changePage( "#aanmelden", { transition: "none", changeHash: false }); 
 					}
 				}
 				
@@ -239,7 +245,7 @@
 									var dag = item.nr;
 									if(item.oefeningen.length > 0) {
 										$(item.oefeningen).each(function(u, oefening) {
-											 db.transaction(function (tx) { tx.executeSql("INSERT INTO `Schema` (dag, soort, afbeelding, categorie, naam, tijdsduur, afstand, sets, herhalingen, gewicht, opmerking) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [dag, oefening.soort, oefening.afbeelding, oefening.categorie, oefening.naam, oefening.tijdsduur, oefening.afstand, oefening.sets, oefening.herhalingen, oefening.gewicht, oefening.opmerking], null, onError); });
+											 db.transaction(function (tx) { tx.executeSql("INSERT INTO `Schema` (schemaid, dag, soort, afbeelding, categorie, nummer, naam, tijdsduur, afstand, sets, herhalingen, gewicht, opmerking) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [oefening.schemaid, dag, oefening.soort, oefening.afbeelding, oefening.categorie, oefening.nummer, oefening.naam, oefening.tijdsduur, oefening.afstand, oefening.sets, oefening.herhalingen, oefening.gewicht, oefening.opmerking], null, onError); });
 										});
 									}
 								});
@@ -260,7 +266,7 @@
 					var prevdag = -1;
 					
 					db.transaction(function (tx) {
-						tx.executeSql("SELECT id, dag, soort, categorie, afbeelding, naam, tijdsduur, afstand, sets, herhalingen, gewicht, opmerking FROM `Schema` ORDER BY dag, id ", [], function (tx, result) {
+						tx.executeSql("SELECT Schema.id, Schema.schemaid, Schema.dag, soort, categorie, afbeelding, nummer, naam, tijdsduur, afstand, sets, herhalingen, gewicht, opmerking, IFNULL(Oordeel, -99) AS Oordeel FROM `Schema` LEFT OUTER JOIN Uitgevoerd ON Uitgevoerd.dag = Schema.dag AND Uitgevoerd.Oefening = Schema.id ORDER BY Schema.dag, Schema.id ", [], function (tx, result) {
 							dataset = result.rows;
 							if(dataset.length > 0) {
 								for(i=0;i<dataset.length;i++) {
@@ -276,7 +282,13 @@
 									
 									var ul = $('#schemas').find('div[data-name="schema ' + item['dag'] + '"]').find('UL');
 									var li = $('<li />').attr('data-icon', 'check').addClass('ui-li-has-thumb');
-									var a = $('<a />').attr('href', '#training').attr('nr', item['id']).addClass('checked ui-btn ui-btn-icon-right ui-icon-check');
+									
+									if(item['Oordeel'] == -99) {
+										var a = $('<a />').attr('href', '#training').attr('nr', item['id']).addClass('ui-btn ui-btn-icon-right ui-icon-check');
+									} else {
+										var a = $('<a />').attr('href', '#training').attr('nr', item['id']).addClass('checked ui-btn ui-btn-icon-right ui-icon-check');
+									} 
+									
 									$('<img />').attr('src', 'http://schema.cardiofitness-noord.nl/equipment/' + item['categorie'] + '/' + item['afbeelding']).addClass('icon').appendTo(a);
 									$('<h2 />').html(item['naam']).appendTo(a);
 									
@@ -293,12 +305,12 @@
 								
 								$('#schemas div[data-name]:not(:first)').hide(); 
 								$('#schemas div[data-name] UL').each(function(item, i){ 
-									item.find('li:first').addClass('ui-first-child');
-									item.find('li:last').addClass('ui-last-child');
+									$(item).find('li:first').addClass('ui-first-child');
+									$(item).find('li:last').addClass('ui-last-child');
 								});
 								 
 							}
-						});
+						}, onError);
 					});
 				}
 				
@@ -308,18 +320,44 @@
 					
 					var nr = $(this).attr('nr');
 					db.transaction(function (tx) {
-						tx.executeSql("SELECT id, dag, soort, categorie, afbeelding, naam, tijdsduur, afstand, sets, herhalingen, gewicht, opmerking FROM `Schema` WHERE (id = ?)", [nr], function (tx, result) {
+						tx.executeSql("SELECT Schema.id, Schema.dag, soort, categorie, afbeelding, naam, tijdsduur, afstand, sets, herhalingen, gewicht, opmerking, IFNULL(Oordeel, -99) AS Oordeel, Schema.schemaid FROM `Schema` LEFT OUTER JOIN Uitgevoerd ON Uitgevoerd.dag = Schema.dag AND Uitgevoerd.Oefening = Schema.id WHERE (Schema.id = ?)", [nr], function (tx, result) {
 							dataset = result.rows;
 							if(dataset.length > 0) {
 								item = dataset.item(0);
-									
-								//$('#training H1').html(item['naam']);
-								$('#training IMG.bigger').attr('src', 'http://schema.cardiofitness-noord.nl/equipment/' + item['categorie'] + '/' + item['afbeelding']);
-									
-								$.mobile.changePage( "#training", { transition: "slideup", changeHash: false }); 
+								
+								if(item['Oordeel'] == -99) {
+									$('#training A.oordeel').removeClass('checked');
+								} else {
+									$('#training A.oordeel').addClass('checked');
+								} 
+								
+								$('#training A.oordeel').attr('nr', item['id']).attr('dag', item['dag']).attr('schemaid', item['schemaid']);
+								$('#training SPAN.naam').html(item['naam']);
+								$('#training IMG.bigger').attr('src', 'http://schema.cardiofitness-noord.nl/equipment/' + item['categorie'] + '/' + item['afbeelding'] +'?x=1');
+								
+								if (item['soort'] == 'gewicht') {
+									$('#training P.oefening').html('<strong>Aantal sets:</strong> ' + item['sets'] + ' stuks<br /><strong>Aantal herhalingen:</strong> ' + item['herhalingen'] + ' stuks<br /><strong>Gewicht:</strong> ' + item['gewicht'] + ' kg<br />' + item['opmerking']);
+								} else {
+									$('#training P.oefening').html('<strong>Afstand:</strong> ' + item['afstand'] + ' km<br /><strong>Tijdsduur:</strong> ' + item['tijdsduur'] + ' minuten<br />' + item['opmerking']);
+								}
+								$.mobile.changePage( "#training", { transition: "none", changeHash: false }); 
 							} 
 						});
-					});
+					}, onError);
+				});
+				
+				$('body').on('click', 'A.oordeel', function(e){ 
+					var dag = parseInt($(this).attr('dag'));
+					var id = parseInt($(this).attr('nr'));
+					var schemaid = parseInt($(this).attr('schemaid'));
+					
+					if(!$(this).hasClass('checked')) {
+						alert('stel oordeel vraag');
+						db.transaction(function (tx) { tx.executeSql("INSERT INTO Uitgevoerd (Dag, Oefening, Schemaid, Oordeel) VALUES (?, ?, ?, ?)", [dag, id, schemaid, 1], null, onError); });
+							
+						$(this).addClass('checked');
+						$('DIV[data-name="schema ' + dag + '"]').find('A[nr="' + id + '"]').addClass('checked');
+					}
 				});
 				
 				

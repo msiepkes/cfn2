@@ -127,6 +127,20 @@ DIV.row DIV>A>I {
 DIV.row DIV>A>I:hover {
     text-shadow: 2px 2px #666;
 }
+#training IMG.bigger {
+	min-width: 200px;
+	min-height: 200px;
+	max-width: 270px;
+	max-height: 270px;
+}
+#training SPAN.naam {
+	font-weight: 700;
+	font-size: 22px;
+}
+#training P.oefening {
+  font-size: 14px;
+  margin-top: 0px;
+}
 A.icon-reply-outline {
 	float: left;
 	font-size: 22px !important; 

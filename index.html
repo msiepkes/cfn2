@@ -33,7 +33,7 @@
 	<a class="demo-icon icon-reply-outline" role="link" data-rel="back" data-transition="none" data-direction="reverse">&#xe80b;</a> 
 		<h1>Traingsschema</h1> 
 		<div style="display: block; text-align:center"><img src="images/logo.png" style="margin-top: 5px;"></div>
-		<div class="dagschema"><i class="demo-icon icon-left">&#xe80c;</i><span>schema 1</span><i class="demo-icon icon-right">&#xe80d;</i></div>
+		<div class="dagschema"><!--i class="demo-icon icon-left">&#xe80c;</i--><span>schema 1</span><!--i class="demo-icon icon-right">&#xe80d;</i--></div>
 	</div>
 	
 	<div data-role="main" class="ui-content" id="schemas"></div>
@@ -50,7 +50,10 @@
 	</div>
 	
 	<div data-role="main" class="ui-content">
+	<span class="naam"></span>
+	<a href="#" class="oordeel ui-btn ui-btn-inline ui-icon-check ui-btn-icon-notext ui-corner-all ui-shadow" style="float: right">Oordeel</a>
 	<img class="bigger" />
+	<p class="oefening"></p>
 	</div>
 	
 	<div data-role="footer" data-position="fixed">&nbsp;</div>
@@ -153,6 +156,9 @@
 	<div data-role="main" class="ui-content"> 
 		<label for="naam">Naam:</label><input type="text" name="naam" id="naam">  
 		<label for="email">E-mail:</label><input type="email" name="email" id="email">
+		<br />
+		<label for="lengte">Lengte (cm):</label><input type="number" name="lengte" id="lengte">
+		<label for="gewicht">Gewicht (kg):</label><input type="number" name="gewicht" id="gewicht">
 		<br /><br />
 		<input type="button" id="btnopslaan" data-inline="false" value="Opslaan">
 	</div>
