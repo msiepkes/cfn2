@@ -94,6 +94,14 @@ DIV.row DIV>A {
 	top: 25%;
 	margin-top: 10px;
 }
+A.antwoord { 
+  font-size: 22px;
+  color: #666 !important;   
+}
+A.antwoord IMG {
+  margin-top: -15px;
+  margin-right: 10px;
+}
 DIV.loaderframe {
   position: absolute;
   z-index: 99999;

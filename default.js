@@ -1,7 +1,7 @@
-
 			$(document).ready(function() {
 				$('.loaderframe').hide();
 				var updates = 0;
+				var url = 'http://schema.cardiofitness-noord.nl/connector.php';
 									   
 				function dateAdd(date, interval, units) {
 				  var ret = new Date(date); //don't change original date
@@ -181,7 +181,7 @@
 							crossDomain : true, 
 							data : { action: 'getDates', lidnr: lidnr }, //werkt
 							dataType: "json",
-							url: 'http://www.cardiofitness-noord.nl/test.php',
+							url: url,
 							success: function(data) {
 								if(data.validuser) {
 									if(data.schema != schema) { $('.loaderframe').show(); updates++; bijwerkenSchema(data.schema); } else { laadSchema(); }
@@ -211,7 +211,7 @@
 							crossDomain : true, 
 							data : { action: 'getUserId', emailadres: $('#amdemail').val(), password: $('#amdpassword').val() }, //werkt
 							dataType: "json",
-							url: 'http://www.cardiofitness-noord.nl/test.php',
+							url: url,
 							success: function(data) {
 								if(data.validuser) {
 									db.transaction(function (tx) { tx.executeSql("INSERT INTO Gebruiker (naam, emailadres, lidnr) VALUES (?, ?, ?)", [data.name, $('#amdemail').val(), data.lidnr], haalProperties(), onError); });
@@ -236,7 +236,7 @@
 						crossDomain : true,
 						data : { action: 'getSchema', lidnr: lidnr }, //werkt
 						dataType: "json",
-						url: 'http://www.cardiofitness-noord.nl/test.php',
+						url: url,
 						success: function(data) {
 							db.transaction(function (tx) { tx.executeSql("DELETE FROM `Schema`", null, null, onError); });
 							
@@ -348,17 +348,32 @@
 				
 				$('body').on('click', 'A.oordeel', function(e){ 
 					var dag = parseInt($(this).attr('dag'));
-					var id = parseInt($(this).attr('nr'));
+					var nr = parseInt($(this).attr('nr'));
 					var schemaid = parseInt($(this).attr('schemaid'));
 					
-					if(!$(this).hasClass('checked')) {
-						alert('stel oordeel vraag');
-						db.transaction(function (tx) { tx.executeSql("INSERT INTO Uitgevoerd (Dag, Oefening, Schemaid, Oordeel) VALUES (?, ?, ?, ?)", [dag, id, schemaid, 1], null, onError); });
-							
-						$(this).addClass('checked');
-						$('DIV[data-name="schema ' + dag + '"]').find('A[nr="' + id + '"]').addClass('checked');
+					if(!$(this).hasClass('checked')) { 
+						$('A.antwoord').attr('dag', dag);
+						$('A.antwoord').attr('nr', nr);
+						$('A.antwoord').attr('schemaid', schemaid);
+						$('#myPopup').popup('open', { history: false }); 
 					}
 				});
+				
+				$('body').on('click', 'A.antwoord', function(e){ 
+					var dag = parseInt($(this).attr('dag'));
+					var id = parseInt($(this).attr('nr'));
+					var schemaid = parseInt($(this).attr('schemaid'));
+					var val = $(this).attr('data-val');
+					
+					db.transaction(function (tx) { tx.executeSql("INSERT INTO Uitgevoerd (Dag, Oefening, Schemaid, Oordeel) VALUES (?, ?, ?, ?)", [dag, id, schemaid, val], null, onError); });
+						
+					$(this).addClass('checked');
+					$('DIV[data-name="schema ' + dag + '"]').find('A[nr="' + id + '"]').addClass('checked');
+					
+					$('#myPopup').popup('close'); 
+				});
+				
+				
 				
 				
 				function bijwerkenLessen(datumtijd) {
@@ -370,7 +385,7 @@
 						crossDomain : true,
 						data : { action: 'getLessen' }, //werkt
 						dataType: "json",
-						url: 'http://www.cardiofitness-noord.nl/test.php',
+						url: url,
 						success: function(data) {
 							$(data.tijden).each(function() {
 								var dag = $(this)[0].dag;
@@ -442,7 +457,7 @@
 						crossDomain : true,
 						data : { action: 'getTijden' }, //werkt
 						dataType: "json",
-						url: 'http://www.cardiofitness-noord.nl/test.php',
+						url: url,
 						success: function(data) {
 							db.transaction(function (tx) { tx.executeSql("DELETE FROM Tijden", null, null, onError); });
 							db.transaction(function (tx) { tx.executeSql("INSERT INTO Tijden (maandag, dinsdag, woensdag, donderdag, vrijdag, zaterdag, zondag, content) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", [data.maandag, data.dinsdag, data.woensdag, data.donderdag, data.vrijdag, data.zaterdag, data.zondag, data.content], laadTijden, onError); });

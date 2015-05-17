@@ -51,11 +51,17 @@
 	
 	<div data-role="main" class="ui-content">
 	<span class="naam"></span>
-	<a href="#" class="oordeel ui-btn ui-btn-inline ui-icon-check ui-btn-icon-notext ui-corner-all ui-shadow" style="float: right">Oordeel</a>
+	<a class="oordeel ui-btn ui-btn-inline ui-icon-check ui-btn-icon-notext ui-corner-all ui-shadow"  style="float: right">Oordeel</a>
 	<img class="bigger" />
 	<p class="oefening"></p>
 	</div>
 	
+	
+	<div data-role="popup" id="myPopup" class="ui-content" data-overlay-theme="b">
+		Hoe ging de oefening ?<br /><br />
+		<a href="#" class="antwoord" data-val="1"><img src="images/thumbs-up-sm.png" align="middle">Goed</a><br /><br />
+		<a href="#" class="antwoord" data-val="0"><img src="images/thumbs-down-sm.png" align="middle">Matig</a>
+	</div>
 	<div data-role="footer" data-position="fixed">&nbsp;</div>
 </div> 
 
