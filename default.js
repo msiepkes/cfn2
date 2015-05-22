@@ -161,9 +161,12 @@
 				
 				$('#btnopslaan').click(function(e){ 
 					e.preventDefault(); 
+
+$.mobile.changePage( "test2.html", { transition: "none", changeHash: false }); 
+/*
 					db.transaction(function (tx) { tx.executeSql("UPDATE Gebruiker SET emailadres=?, naam=?, lengte=?, gewicht=?", [$('#email').val(), $('#naam').val(), $('#lengte').val(), $('#gewicht').val()], function() {
 						alert('De gegevens zijn opgeslagen');
-					}, onError); }); 
+					}, onError); }); */
 				});
 				
 				
